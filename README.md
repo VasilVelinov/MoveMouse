@@ -1,2 +1,2 @@
 # MoveMouse
-Small app, creates small mouse movements no pc do not sleep
+Small app, creates small mouse movements so pc do not sleep
