@@ -36,6 +36,6 @@ A lightweight Python application designed to simulate mouse movement and prevent
    ```
 4. Run the app
    ```bash
-   python mouse_app.py
+   python MoveMouse.py
    ```
    
