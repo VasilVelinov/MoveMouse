@@ -28,7 +28,7 @@ A lightweight Python application designed to simulate mouse movement and prevent
 
 2. Navigate to directory
    ```bash
-   cd move-mouse-app
+   cd MoveMouse
    ```
 3. Install needed requirements
    ```bash
