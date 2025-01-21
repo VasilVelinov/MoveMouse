@@ -19,7 +19,6 @@ A lightweight Python application designed to simulate mouse movement and prevent
 - **Libraries**:
   - `tkinter`
   - `pyautogui`
-  - `math`
   - `threading`
 
 ---
