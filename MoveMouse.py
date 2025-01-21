@@ -85,6 +85,7 @@ class MouseMovementApp:
                 time.sleep(0.1)
                 pyautogui.moveTo(current_x - 1, current_y - 1)
                 time.sleep(0.1)
+                pyautogui.press('shift')
 
         self.status_label["text"] = "Status: Idle"
         self.countdown_label["text"] = "Countdown: 15"  # Reset countdown label
