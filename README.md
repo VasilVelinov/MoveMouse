@@ -26,9 +26,7 @@ A lightweight Python application designed to simulate mouse movement and prevent
 
 ## **Usage**
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/move-mouse-app.git
-   ```
+
 2. Navigate to directory
    ```bash
    cd move-mouse-app
