@@ -2,3 +2,6 @@
 /build/
 /dist/
 /logs/
+
+# Ignore files
+.spec
