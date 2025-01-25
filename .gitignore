@@ -4,4 +4,4 @@
 /logs/
 
 # Ignore files
-.spec
+*.spec
