@@ -12,7 +12,7 @@ class MouseMovementApp:
         self.master = master
         master.title("Move Mouse")
         master.geometry("400x500")
-        
+
         # Configure rows and columns to center the content
         master.grid_rowconfigure(0, weight=1)
         master.grid_rowconfigure(10, weight=1)
@@ -30,16 +30,25 @@ class MouseMovementApp:
         self.help_menu.add_command(label="About", command=self.show_about)
         self.menu_bar.add_cascade(label="Help", menu=self.help_menu)
 
+        # Theme Menu
+        self.theme_menu = tk.Menu(self.menu_bar, tearoff=0)
+        self.theme_menu.add_command(label="Light Theme", command=self.set_light_theme)
+        self.theme_menu.add_command(label="Dark Theme", command=self.set_dark_theme)
+        self.menu_bar.add_cascade(label="Theme", menu=self.theme_menu)
+
+        # Set initial theme
+        self.style = ttk.Style(master)
+
         self.welcome_label = ttk.Label(master, text="Welcome to Move Mouse!", font=("Helvetica", 12, "bold"))
         self.welcome_label.grid(row=1, column=0, columnspan=3, pady=(20, 10))
 
         # Add image below the welcome label
-        self.image = Image.open("mouse.png")  # Use your image file here
+        self.image = Image.open("assets/mouse.png")  # Use your image file here
         self.image = self.image.resize((100, 100))  # Resize image as needed
         self.photo = ImageTk.PhotoImage(self.image)
         self.image_label = ttk.Label(master, image=self.photo)
         self.image_label.grid(row=2, column=0, columnspan=3, pady=(10, 20))
-        
+
         self.start_button = ttk.Button(master, text="Start", command=self.start_mouse_movement)
         self.stop_button = ttk.Button(master, text="Stop", command=self.stop_mouse_movement)
         self.status_label = ttk.Label(master, text="Status: Idle")
@@ -65,11 +74,75 @@ class MouseMovementApp:
         self.countdown_label = ttk.Label(master, text=f"Countdown: {int(self.countdown_slider.get())}")
         self.countdown_label.grid(row=8, column=0, columnspan=3, pady=10)
 
-        self.signature_label = ttk.Label(master, text="@ Vasil Velinov", font=("Helvetica", 8, "bold"))
-        self.signature_label.grid(row=9, column=0, columnspan=3, pady=10)
-
         self.mouse_movement_thread = None
         self.is_running = False
+        self.set_light_theme()
+
+    def set_light_theme(self):
+        """Apply the light theme."""
+        self.style.theme_use("default")
+        self.style.configure("TLabel", background="white smoke", foreground="black")
+        self.style.configure("TButton", background="white smoke", foreground="black")
+        self.style.configure(
+        "Custom.Horizontal.TProgressbar",
+        troughcolor="lightgray",
+        background="lime green",
+        thickness=20,
+    )
+    
+        # Configure slider (scale) styles
+        self.style.layout(
+            "Custom.TScale",
+            [
+                ("Scale.trough", {"sticky": "we"}),
+                ("Scale.slider", {"side": "left", "sticky": ""}),
+            ],
+        )
+        self.style.configure(
+            "Custom.TScale",
+            troughcolor="blue",
+            sliderthickness=15,
+            sliderlength=30,
+            background="white smoke",
+        )
+
+        # Apply styles to specific widgets
+        self.countdown_progress.configure(style="Custom.Horizontal.TProgressbar")
+        self.countdown_slider.configure(style="Custom.TScale")
+        self.master.configure(bg="white smoke")
+
+    def set_dark_theme(self):
+        """Apply the dark theme."""
+        self.style.theme_use("default")
+        self.style.configure("TLabel", background="black", foreground="white")
+        self.style.configure("TButton", background="white", foreground="black")
+        self.style.configure(
+        "Custom.Horizontal.TProgressbar",
+        troughcolor="lightgray",
+        background="lime green",
+        thickness=20,
+    )
+    
+        # Configure slider (scale) styles
+        self.style.layout(
+            "Custom.TScale",
+            [
+                ("Scale.trough", {"sticky": "we"}),
+                ("Scale.slider", {"side": "left", "sticky": ""}),
+            ],
+        )
+        self.style.configure(
+            "Custom.TScale",
+            troughcolor="red",
+            sliderthickness=15,
+            sliderlength=30,
+            background="black",
+        )
+
+        # Apply styles to specific widgets
+        self.countdown_progress.configure(style="Custom.Horizontal.TProgressbar")
+        self.countdown_slider.configure(style="Custom.TScale")
+        self.master.configure(bg="#000000")
 
     def show_help(self):
         """Display the Help information."""
@@ -106,7 +179,6 @@ class MouseMovementApp:
 
     def stop_mouse_movement(self):
         self.status_label["text"] = "Status: Stopped"
-        # Allow sleep on Windows
         ctypes.windll.kernel32.SetThreadExecutionState(0x00000002)  # Revert sleep prevention
         self.is_running = False
         self.stop_flag = True  # Set the flag to stop countdown and movement

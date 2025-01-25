@@ -1,0 +1,4 @@
+# Ignore directories
+/build/
+/dist/
+/logs/
